@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реестр Минцифры и Минпромторга — Юридические услуги Lexiqa</title>
+    <meta name="description" content="Стратегический консалтинг. Реестры Минцифры и Минпромторга. ИТ-аккредитация, ПАК, КИИ (ПП РФ 1912), налоговая эффективность. Москва.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#121212',       
+                        paper: '#F7F5F2',     
+                        emerald: '#1B4D3E',   
+                        gold: '#B08D55',      
+                        line: '#E0DCD5',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        body: ['Manrope', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'grain': "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.04%22/%3E%3C/svg%3E')",
+                    }
+                }
+            }
+        }
+    </script>
+    <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=106346036', 'ym');
+
+    ym(106346036, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/106346036" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body { background-color: #F7F5F2; color: #121212; font-family: 'Manrope', sans-serif; overflow-x: hidden; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .tracking-logo { letter-spacing: 0.15em; }
+        
+        /* Sticky Button */
+        .sticky-btn {
+            position: fixed; top: 200px; right: 0; z-index: 40;
+            background-color: #1B4D3E; color: white;
+            padding: 16px 10px;
+            border-top-left-radius: 4px; border-bottom-left-radius: 4px;
+            cursor: pointer; box-shadow: -4px 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+        }
+        .sticky-btn:hover { transform: translateX(-4px); }
+        .vertical-text { writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); text-transform: uppercase; font-size: 10px; letter-spacing: 0.2em; font-weight: 700; }
+
+        /* Roadmap Timeline Styles */
+        .timeline-container { position: relative; max-width: 1000px; margin: 0 auto; padding: 40px 0; }
+        .timeline-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: #E0DCD5; transform: translateX(-50%); }
+        .timeline-item { position: relative; margin-bottom: 60px; width: 100%; display: flex; justify-content: center; }
+        
+        .timeline-content { 
+            width: 45%; 
+            background: #fff; 
+            padding: 24px; 
+            border: 1px solid #E0DCD5; 
+            position: relative; 
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        .timeline-content:hover { border-color: #1B4D3E; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+
+        .timeline-item:nth-child(odd) .timeline-content { margin-right: auto; text-align: right; border-right: 4px solid #1B4D3E; }
+        .timeline-item:nth-child(even) .timeline-content { margin-left: auto; text-align: left; border-left: 4px solid #B08D55; }
+
+        .timeline-dot {
+            position: absolute; left: 50%; top: 24px;
+            width: 16px; height: 16px;
+            background: #F7F5F2; border: 3px solid #1B4D3E;
+            border-radius: 50%; transform: translateX(-50%); z-index: 20;
+        }
+
+        /* Mobile Roadmap */
+        @media (max-width: 768px) {
+            .timeline-line { left: 20px; }
+            .timeline-content { width: calc(100% - 60px); margin-left: 60px !important; margin-right: 0 !important; text-align: left !important; border-right: 1px solid #E0DCD5 !important; border-left: 4px solid #1B4D3E !important; }
+            .timeline-dot { left: 20px; }
+        }
+
+        /* Side Panel & Modal */
+        #sidePanel { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        #sidePanel.open { transform: translateX(0); }
+        .overlay { opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        .overlay.open { opacity: 1; pointer-events: auto; }
+        
+        /* Checkbox Custom Style */
+        .checkbox-wrapper input:checked + div { background-color: #1B4D3E; border-color: #1B4D3E; }
+        .checkbox-wrapper input:checked + div svg { display: block; }
+
+        /* Chain section */
+        .chain-card { position: relative; overflow: hidden; }
+        .chain-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #1B4D3E, #B08D55); }
+        .chain-number { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: 700; font-size: 14px; }
+    </style>
+</head>
+<body class="antialiased selection:bg-emerald selection:text-white relative">
+    
+    <div class="fixed inset-0 pointer-events-none z-50 bg-grain opacity-60"></div>
+
+    <div class="sticky-btn" onclick="togglePanel()">
+        <i data-lucide="mail" class="w-5 h-5"></i>
+        <span class="vertical-text">Заявка</span>
+    </div>
+
+    <nav class="fixed w-full z-40 top-0 bg-paper/95 backdrop-blur-md border-b border-line transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+            <a href="index.html" class="block hover:opacity-70 transition">
+    <img src="logo.png" alt="Lexiqa Logo" class="h-12 w-auto object-contain">
+</a>
+
+            <a href="tel:+74951780095" class="lg:hidden font-serif text-sm text-ink hover:text-emerald transition ml-auto mr-4">+7 495 178 00 95</a>
+
+            <div class="hidden lg:flex items-center gap-12">
+                <div class="flex gap-8 text-[10px] font-bold uppercase tracking-widest text-ink/60">
+                    <a href="reestr-po-mintsifry.html" class="hover:text-emerald transition">Реестр ПО</a>
+                    <a href="reestr-pak-mintsifry.html" class="hover:text-emerald transition">Реестр ПАК</a>
+                    <a href="reestr-minpromtorg.html" class="hover:text-emerald transition">Реестр Минпромторга</a>
+                    <a href="it-accreditation.html" class="hover:text-emerald transition">ИТ-Аккредитация</a>
+                    <a href="#roadmap" class="hover:text-emerald transition">Граф Локализации</a>
+                    <a href="#contact" class="hover:text-emerald transition">Контакты</a>
+                </div>
+                
+                <div class="h-8 w-px bg-line"></div>
+
+                <div class="flex flex-col text-right">
+                    <a href="tel:+74951780095" class="text-lg font-serif hover:text-emerald transition">+7 495 178 00 95</a>
+                    <a href="tel:+79012892890" class="text-sm font-serif text-ink/60 hover:text-emerald transition">+7 901 289 289 0</a>
+                    <a href="mailto:info@lexiqa.ru" class="text-xs text-ink/50 hover:text-emerald transition uppercase tracking-widest mt-1">info@lexiqa.ru</a>
+                </div>
+            </div>
+
+            <button class="lg:hidden text-ink p-2" onclick="toggleMobMenu()">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+        
+        <div id="mobMenu" class="hidden absolute top-24 left-0 w-full bg-paper border-b border-line p-8 shadow-xl lg:hidden">
+            <div class="flex flex-col gap-6 text-center">
+                <a href="reestr-po-mintsifry.html" class="text-xs font-bold uppercase tracking-widest">Реестр ПО</a>
+                <a href="reestr-pak-mintsifry.html" class="text-xs font-bold uppercase tracking-widest">Реестр ПАК</a>
+                <a href="reestr-minpromtorg.html" class="text-xs font-bold uppercase tracking-widest">Реестр Минпромторга</a>
+                <a href="it-accreditation.html" class="text-xs font-bold uppercase tracking-widest">ИТ-Аккредитация</a>
+                <a href="#roadmap" class="text-xs font-bold uppercase tracking-widest" onclick="toggleMobMenu()">Граф Локализации</a>
+                <div class="flex flex-col gap-2 mt-4">
+                    <a href="tel:+74951780095" class="font-serif text-2xl">+7 495 178 00 95</a>
+                    <a href="tel:+79012892890" class="font-serif text-lg text-ink/60">+7 901 289 289 0</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="pt-40 pb-24 px-6 relative overflow-hidden border-b border-line">
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-3 py-1 border border-emerald/20 bg-white/50 rounded-full mb-8">
+                <div class="w-1.5 h-1.5 rounded-full bg-emerald"></div>
+                <span class="text-[10px] uppercase tracking-[0.2em] text-emerald font-bold">Искусство Технологического Суверенитета</span>
+            </div>
+            
+            <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl leading-tight mb-8 text-ink">
+                Архитектура доступа <br>
+                <span class="italic text-emerald">к государственному заказу</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-ink/70 leading-relaxed max-w-3xl mx-auto font-light mb-8">
+                Фундамент нашей работы — включение продуктов в реестры Минцифры и Минпромторга. 
+                На этой базе мы выстраиваем экосистему активов: соответствие КИИ, капитализацию IP и налоговую эффективность бизнеса.
+            </p>
+            
+            <div class="flex flex-wrap justify-center gap-6 text-xs font-bold uppercase tracking-widest text-ink/40">
+                <span class="border-b border-transparent hover:border-emerald transition cursor-default">Минцифры</span>
+                <span class="border-b border-transparent hover:border-emerald transition cursor-default">Минпромторг</span>
+                <span class="border-b border-transparent hover:border-emerald transition cursor-default">44-ФЗ / 223-ФЗ</span>
+                <span class="border-b border-transparent hover:border-emerald transition cursor-default">ПП РФ 1912 КИИ</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6">
+
+        <section id="competence" class="py-24 border-b border-line">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <div class="group">
+                    <div class="flex items-center justify-between border-b border-line pb-4 mb-6">
+                        <h2 class="font-serif text-3xl text-ink">Цифровой контур</h2>
+                        <i data-lucide="code-2" class="w-6 h-6 text-emerald opacity-50 group-hover:opacity-100 transition"></i>
+                    </div>
+                    <p class="text-[10px] font-bold uppercase tracking-widest text-gold mb-6">Реестры Минцифры</p>
+                    <div class="space-y-6 text-ink/80 leading-relaxed">
+                        <p>Работа с программным обеспечением требует хирургической точности. Мы берем на себя легализацию сложнейших архитектур — от операционных систем до нейросетевых моделей.</p>
+                        <p>Наш подход исключает формализм. Мы проводим глубокий аудит технологического стека, выявляем риски Open Source лицензий и выстраиваем стратегию защиты прав, превращая код в капитализируемый нематериальный актив.</p>
+                        <div class="flex flex-wrap gap-3 mt-4">
+                            <a href="reestr-po-mintsifry.html" class="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest font-bold text-emerald border-b border-emerald/30 pb-1 hover:border-emerald transition">Реестр ПО <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+                            <a href="reestr-pak-mintsifry.html" class="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest font-bold text-gold border-b border-gold/30 pb-1 hover:border-gold transition">Реестр ПАК <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group">
+                    <div class="flex items-center justify-between border-b border-line pb-4 mb-6">
+                        <h2 class="font-serif text-3xl text-ink">Промышленный контур</h2>
+                        <i data-lucide="factory" class="w-6 h-6 text-emerald opacity-50 group-hover:opacity-100 transition"></i>
+                    </div>
+                    <p class="text-[10px] font-bold uppercase tracking-widest text-gold mb-6">Реестры Минпромторга</p>
+                    <div class="space-y-6 text-ink/80 leading-relaxed">
+                        <p>Локализация производства — это многофакторная инженерная задача. Мы сопровождаем проекты любого масштаба: от телекоммуникационного оборудования до химической промышленности.</p>
+                        <p>Мы не просто помогаем получить акт экспертизы ТПП. Мы выстраиваем цепочки поставок, адаптируем конструкторскую документацию под требования Минпромторга и находим оптимальный баланс между собственным и контрактным производством.</p>
+                        <a href="reestr-minpromtorg.html" class="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest font-bold text-emerald border-b border-emerald/30 pb-1 hover:border-emerald transition">Подробнее об услуге <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-emerald text-paper -mx-6 px-6 py-20 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            
+            <div class="max-w-4xl mx-auto text-center relative z-10">
+                <i data-lucide="layers" class="w-10 h-10 text-gold mx-auto mb-6"></i>
+                <h3 class="font-serif text-3xl md:text-4xl mb-6">Мы любим сложные задачи</h3>
+                <p class="text-white/80 text-lg leading-relaxed max-w-2xl mx-auto mb-8">
+                    Там, где другие видят тупик, мы видим архитектурное решение. 
+                    Нестандартные юрисдикции, запутанные цепочки прав, отсутствие исходной документации или смешанный стек технологий — 
+                    это наша естественная среда обитания.
+                </p>
+                <div class="inline-block border border-gold/30 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest text-gold">
+                    Погружение в проект 100%
+                </div>
+            </div>
+        </section>
+
+        <section id="roadmap" class="py-24 relative">
+            <div class="text-center mb-20">
+                <span class="text-emerald font-bold uppercase tracking-widest text-[10px]">Граф Процессов</span>
+                <h2 class="font-serif text-4xl md:text-5xl mt-3 mb-6">Сценарий Локализации ПАК</h2>
+                <p class="text-ink/60 max-w-3xl mx-auto text-lg">
+                    Кейс: Клиент приобретает права на иностранную технологию. Задача: полный цикл локализации.
+                </p>
+            </div>
+
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="text-[10px] uppercase tracking-widest text-ink/40 font-bold mb-2">Этап 1: Диагностика</div>
+                        <h4 class="font-serif text-xl mb-3">Входной аудит и Стратегия</h4>
+                        <p class="text-sm text-ink/70 leading-relaxed mb-4">
+                            Анализ состава оборудования и ПО. Определение кодов и критериев, предъявляемых к продукции. Формирование стратегии выполнения критериев ПП РФ 719 (баллы, операции) и 1236.
+                        </p>
+                        <ul class="text-xs text-ink/50 space-y-1">
+                            <li>• Расчет адвалорной доли</li>
+                            <li>• Подбор кодов ОКПД2</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="text-[10px] uppercase tracking-widest text-ink/40 font-bold mb-2">Этап 2: ВЭД и Логистика</div>
+                        <h4 class="font-serif text-xl mb-3">Оптимизация Импорта</h4>
+                        <p class="text-sm text-ink/70 leading-relaxed mb-4">
+                            Нельзя просто ввезти "коробки". Ошибки в кодах ведут к переплате НДС и проблемам с признанием "российскости".
+                        </p>
+                        <ul class="text-xs text-ink/80 space-y-2 border-l-2 border-emerald/20 pl-3">
+                            <li><strong>Разделение потоков:</strong> "Железо" отдельно (комплектующие), права на софт — отдельно (цифровой канал).</li>
+                            <li><strong>Классификация:</strong> Точный подбор ТН ВЭД для минимизации пошлин.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="flex items-center gap-2 mb-2 justify-end md:justify-start">
+                            <i data-lucide="git-branch" class="w-4 h-4 text-emerald"></i>
+                            <div class="text-[10px] uppercase tracking-widest text-emerald font-bold">Параллельный трек: ПО</div>
+                        </div>
+                        <h4 class="font-serif text-xl mb-3">Трансфер прав и Очистка</h4>
+                        <p class="text-sm text-ink/70 leading-relaxed mb-4">
+                            Легализация стека для исключения рисков отзыва лицензий.
+                        </p>
+                        <ul class="text-sm space-y-2 text-ink/80">
+                            <li>1. <strong>Отчуждение:</strong> Договор передачи исключительных прав.</li>
+                            <li>2. <strong>Аудит кода:</strong> Устранение "токсичных" Open Source компонентов.</li>
+                            <li>3. <strong>Роспатент:</strong> Свидетельства на ЭВМ и БД.</li>
+                            <li>4. <strong>Минцифры:</strong> Включение в реестр отечественного ПО.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i data-lucide="cpu" class="w-4 h-4 text-gold"></i>
+                            <div class="text-[10px] uppercase tracking-widest text-gold font-bold">Параллельный трек: Железо</div>
+                        </div>
+                        <h4 class="font-serif text-xl mb-3">Организация производства</h4>
+                        <p class="text-sm text-ink/70 leading-relaxed mb-4">
+                            Выполнение требований Минпромторга по локализации.
+                        </p>
+                        <ul class="text-sm space-y-2 text-ink/80">
+                            <li>1. <strong>Документация:</strong> Адаптация КД, ТД и ПД под требования законодательства РФ.</li>
+                            <li>2. <strong>Производство:</strong> Выполнение необходимых технологических операций или других критериев.</li>
+                            <li>3. <strong>Комплаенс:</strong> Сертификаты соответствия, лицензии.</li>
+                            <li>4. <strong>ТПП:</strong> Акт экспертизы / Сертификат СТ-1 -> Реестр РЭП.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="border-color: #C5A059;"></div>
+                    <div class="timeline-content text-center md:text-center" style="width: 60%; border: 1px solid #C5A059;">
+                        <div class="text-[10px] uppercase tracking-widest text-gold font-bold mb-2">Финал</div>
+                        <h4 class="font-serif text-2xl mb-4">Статус ПАК</h4>
+                        <p class="text-sm text-ink/70 leading-relaxed mb-6">
+                            Синтез реестровых записей ПО и Оборудования. Регистрация Программно-Аппаратного Комплекса в Минцифры и ИТ-Аккредитация.
+                        </p>
+                        <div class="grid grid-cols-2 gap-2 text-xs font-bold text-emerald text-left mx-auto max-w-xs">
+                            <div class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3"></i> Доход ПАК = IT-выручка</div>
+                            <div class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3"></i> Инвест. вычет 2.0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 border-t border-line bg-paper">
+            <h4 class="text-center font-serif text-2xl mb-12">Параллельные треки развития</h4>
+            <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 px-6">
+                <a href="it-accreditation.html" class="bg-white p-6 border border-line text-center hover:border-emerald transition group">
+                    <div class="font-bold text-sm mb-2 group-hover:text-emerald transition">IT-Аккредитация</div>
+                    <p class="text-xs text-ink/60">ПП РФ 1729. Налоговые льготы.</p>
+                </a>
+                <div class="bg-white p-6 border border-line text-center">
+                    <div class="font-bold text-sm mb-2">Статус МТК</div>
+                    <p class="text-xs text-ink/60">Льготное кредитование.</p>
+                </div>
+                <div class="bg-white p-6 border border-line text-center">
+                    <div class="font-bold text-sm mb-2">Сколково</div>
+                    <p class="text-xs text-ink/60">Налоговые преференции.</p>
+                </div>
+                <div class="bg-white p-6 border border-line text-center">
+                    <div class="font-bold text-sm mb-2">Гранты</div>
+                    <p class="text-xs text-ink/60">РФРИТ, ФСИ.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-white border-y border-line">
+            <div class="max-w-4xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+                <div>
+                    <h3 class="font-serif text-2xl mb-3">Принцип конфиденциальности</h3>
+                    <p class="text-ink/70 text-sm max-w-xl leading-relaxed">
+                        Мы понимаем, что информация о цепочках поставок и бенефициарах является критически важной. 
+                        Вся работа ведется под строгим NDA. Мы не используем логотипы клиентов в публичном портфолио без прямого письменного согласия.
+                    </p>
+                </div>
+                <div class="shrink-0 opacity-20">
+                    <i data-lucide="shield-check" class="w-16 h-16"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW: Комплексная локализация Section -->
+        <section class="py-24 border-b border-line">
+            <div class="text-center mb-16">
+                <span class="text-gold font-bold uppercase tracking-widest text-[10px]">Стратегия полного цикла</span>
+                <h2 class="font-serif text-3xl md:text-4xl mt-3 mb-6">Комплексная локализация: Архитектура суверенитета</h2>
+                <p class="text-ink/60 max-w-3xl mx-auto text-lg leading-relaxed">
+                    Мы не просто «подаём документы». Мы выстраиваем полную цепочку статусов, где каждый элемент усиливает экономический эффект следующего. 
+                    Результат — интегрированная система доступа к госзакупкам и налоговым преференциям.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                
+                <a href="it-accreditation.html" class="chain-card bg-white p-8 border border-line hover:shadow-lg transition group">
+                    <div class="chain-number bg-emerald/10 text-emerald mb-4">1</div>
+                    <h3 class="font-serif text-xl mb-3 group-hover:text-emerald transition">ИТ-Аккредитация</h3>
+                    <p class="text-sm text-ink/60 leading-relaxed mb-4">
+                        Фундамент. Статус аккредитованной ИТ-компании по ПП РФ 1729 открывает доступ к пониженным страховым взносам (15%) и льготной ставке налога на прибыль.
+                    </p>
+                    <div class="text-[10px] uppercase tracking-widest font-bold text-emerald flex items-center gap-1">
+                        Подробнее <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    </div>
+                </a>
+
+                <a href="reestr-po-mintsifry.html" class="chain-card bg-white p-8 border border-line hover:shadow-lg transition group">
+                    <div class="chain-number bg-emerald/10 text-emerald mb-4">2</div>
+                    <h3 class="font-serif text-xl mb-3 group-hover:text-emerald transition">Реестр ПО</h3>
+                    <p class="text-sm text-ink/60 leading-relaxed mb-4">
+                        Включение программного обеспечения в единый реестр Минцифры — ключ к НДС 0% на лицензии и преимуществу в госзакупках по 44-ФЗ и 223-ФЗ.
+                    </p>
+                    <div class="text-[10px] uppercase tracking-widest font-bold text-emerald flex items-center gap-1">
+                        Подробнее <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    </div>
+                </a>
+
+                <a href="reestr-minpromtorg.html" class="chain-card bg-white p-8 border border-line hover:shadow-lg transition group">
+                    <div class="chain-number bg-gold/10 text-gold mb-4">3</div>
+                    <h3 class="font-serif text-xl mb-3 group-hover:text-emerald transition">Реестр Минпромторга</h3>
+                    <p class="text-sm text-ink/60 leading-relaxed mb-4">
+                        Подтверждение локализации оборудования по ПП РФ 719. Выполнение критериев, экспертиза ТПП, акт или СТ-1 — путь к статусу «Сделано в России».
+                    </p>
+                    <div class="text-[10px] uppercase tracking-widest font-bold text-gold flex items-center gap-1">
+                        Подробнее <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    </div>
+                </a>
+
+                <a href="reestr-pak-mintsifry.html" class="chain-card bg-white p-8 border border-line hover:shadow-lg transition group">
+                    <div class="chain-number bg-gold/10 text-gold mb-4">4</div>
+                    <h3 class="font-serif text-xl mb-3 group-hover:text-emerald transition">Статус ПАК</h3>
+                    <p class="text-sm text-ink/60 leading-relaxed mb-4">
+                        Вершина пирамиды. Программно-аппаратный комплекс объединяет записи в реестрах ПО и оборудования, трансформируя выручку в ИТ-доход с максимальными льготами.
+                    </p>
+                    <div class="text-[10px] uppercase tracking-widest font-bold text-gold flex items-center gap-1">
+                        Подробнее <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="max-w-4xl mx-auto mt-12 p-8 bg-emerald/5 border border-emerald/20">
+                <div class="flex items-start gap-4">
+                    <i data-lucide="zap" class="w-6 h-6 text-gold shrink-0 mt-1"></i>
+                    <div>
+                        <h4 class="font-bold text-sm uppercase tracking-widest mb-2">Кумулятивный эффект</h4>
+                        <p class="text-sm text-ink/70 leading-relaxed">
+                            Каждый статус в цепочке снижает налоговую нагрузку и расширяет доступ к рынку. 
+                            ИТ-Аккредитация даёт льготы по взносам. Реестр ПО — НДС 0%. Реестр Минпромторга — доступ к промышленным закупкам. 
+                            А статус ПАК конвертирует выручку от продажи оборудования в ИТ-доход, что критично для поддержания порога 70% ИТ-выручки по НК РФ и получения преференций.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer id="contact" class="bg-paper py-24 px-6 relative">
+            
+            <div class="max-w-4xl mx-auto text-center mb-16">
+                <h2 class="font-serif text-4xl mb-6">Готовы обсудить проект?</h2>
+                <p class="text-ink/60 text-lg">Оставьте заявку для предварительной оценки архитектуры вашего проекта.</p>
+            </div>
+
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20">
+                <div>
+                    <a href="#" class="font-serif text-3xl md:text-4xl tracking-logo font-medium text-ink hover:opacity-70 transition block mb-10">
+                        lex<span class="text-emerald">i</span>qa
+                    </a>
+                    
+                    <div class="font-body text-xl space-y-6 text-ink/80">
+                        <p class="flex items-center gap-3"><i data-lucide="map-pin" class="w-5 h-5 text-emerald"></i> Москва, Пресненская наб., 12</p>
+                        <p class="flex items-center gap-3"><i data-lucide="mail" class="w-5 h-5 text-emerald"></i> <a href="mailto:info@lexiqa.ru" class="hover:text-emerald transition">info@lexiqa.ru</a></p>
+                        <div class="flex flex-col gap-2 mt-2">
+                             <p class="flex items-center gap-3"><i data-lucide="phone" class="w-5 h-5 text-emerald"></i> <a href="tel:+74951780095" class="hover:text-emerald transition">+7 495 178 00 95</a></p>
+                             <p class="flex items-center gap-3 pl-8"><a href="tel:+79012892890" class="hover:text-emerald transition text-sm text-ink/60">+7 901 289 289 0</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-10 border border-line shadow-sm">
+                    <h3 class="font-serif text-2xl mb-8">Начать диалог</h3>
+<form id="footerForm" class="bg-ink p-8 md:p-10 border border-white/10">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+            <label class="text-[10px] text-white/40 uppercase tracking-widest mb-1 block">Имя</label>
+            <input type="text" name="name" required class="w-full bg-white/5 border border-white/10 px-4 py-3 text-white text-sm focus:outline-none focus:border-gold transition-colors">
+        </div>
+        <div>
+            <label class="text-[10px] text-white/40 uppercase tracking-widest mb-1 block">Компания</label>
+            <input type="text" name="company" required class="w-full bg-white/5 border border-white/10 px-4 py-3 text-white text-sm focus:outline-none focus:border-gold transition-colors">
+        </div>
+    </div>
+    
+    <div class="mb-4">
+        <label class="text-[10px] text-white/40 uppercase tracking-widest mb-1 block">Телефон / Email</label>
+        <input type="text" name="contact" required class="w-full bg-white/5 border border-white/10 px-4 py-3 text-white text-sm focus:outline-none focus:border-gold transition-colors">
+    </div>
+
+    <div class="mb-6">
+        <label class="text-[10px] text-white/40 uppercase tracking-widest mb-1 block">Описание запроса</label>
+        <textarea name="message" rows="2" class="w-full bg-white/5 border border-white/10 px-4 py-3 text-white text-sm focus:outline-none focus:border-gold transition-colors resize-none"></textarea>
+    </div>
+
+    <div class="space-y-6">
+        <label class="flex items-start gap-3 cursor-pointer group">
+            <input type="checkbox" required class="peer sr-only">
+            <div class="w-4 h-4 border border-white/30 shrink-0 transition-colors peer-checked:bg-gold peer-checked:border-gold flex items-center justify-center mt-0.5">
+                <svg class="w-3 h-3 text-white hidden peer-checked:block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <span class="text-[10px] text-white/50 leading-tight uppercase tracking-wider">
+                Я даю согласие на обработку персональных данных в соответствии с <button type="button" onclick="togglePrivacy()" class="underline hover:text-gold">Политикой</button>
+            </span>
+        </label>
+
+        <button type="submit" id="footerBtn" class="w-full bg-gold text-white py-4 text-xs font-bold uppercase tracking-[0.2em] hover:bg-white hover:text-ink transition-all duration-500">Отправить запрос</button>
+        <p id="footerStatus" class="text-[10px] text-gold opacity-0 transition-opacity text-center uppercase tracking-widest mt-2">Заявка отправлена</p>
+    </div>
+</form>
+                </div>
+            </div>
+            
+            <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-line/50 flex flex-col md:flex-row justify-between text-ink/40 text-[10px] uppercase tracking-widest gap-4">
+                <span>© 2026 lexiqa </span>
+                <button onclick="togglePrivacy()" class="hover:text-emerald text-left">Политика конфиденциальности</button>
+            </div>
+        </footer>
+
+    </main>
+
+    <div id="overlay" onclick="togglePanel()" class="fixed inset-0 bg-ink/20 backdrop-blur-sm z-40 overlay"></div>
+    <div id="sidePanel" class="fixed top-0 right-0 h-full w-full md:w-[480px] bg-paper shadow-2xl z-50 p-8 md:p-12 overflow-y-auto border-l border-line flex flex-col">
+        <div class="flex justify-between items-center mb-12">
+            <h3 class="font-serif text-2xl text-ink">Обсудить проект</h3>
+            <button onclick="togglePanel()" class="text-ink/50 hover:text-emerald transition">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
+        </div>
+
+<form id="sideForm" class="space-y-4">
+    <input type="text" name="name" placeholder="ВАШЕ ИМЯ" required class="w-full bg-paper border border-line px-4 py-3 focus:outline-none focus:border-emerald transition-colors text-sm">
+    <input type="text" name="company" placeholder="КОМПАНИЯ" required class="w-full bg-paper border border-line px-4 py-3 focus:outline-none focus:border-emerald transition-colors text-sm">
+    <input type="text" name="contact" placeholder="ТЕЛЕФОН ИЛИ EMAIL" required class="w-full bg-paper border border-line px-4 py-3 focus:outline-none focus:border-emerald transition-colors text-sm">
+    <textarea name="message" placeholder="ОПИСАНИЕ ЗАПРОСА" rows="3" class="w-full bg-paper border border-line px-4 py-3 focus:outline-none focus:border-emerald transition-colors text-sm resize-none"></textarea>
+    
+    <div class="pt-4">
+        <label class="flex items-start gap-3 cursor-pointer checkbox-wrapper group mb-8">
+            <input type="checkbox" required class="peer sr-only">
+            <div class="w-4 h-4 border border-ink/30 shrink-0 transition-colors peer-checked:bg-emerald peer-checked:border-emerald flex items-center justify-center">
+                <svg class="w-3 h-3 text-white hidden peer-checked:block pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <span class="text-[10px] text-ink/50 leading-tight">
+                Я даю согласие на обработку персональных данных в соответствии с <button type="button" onclick="togglePrivacy()" class="underline hover:text-emerald">Политикой конфиденциальности</button>
+            </span>
+        </label>
+
+        <button type="submit" id="panelSubmitBtn" class="w-full bg-ink text-white py-4 text-xs font-bold uppercase tracking-[0.2em] hover:bg-emerald transition-all shadow-lg">Отправить</button>
+        <div id="panelStatus" class="mt-4 text-center text-xs font-bold text-emerald opacity-0 transition-opacity tracking-widest">Заявка принята</div>
+    </div>
+</form>
+    </div>
+
+    <div id="privacyModal" class="fixed inset-0 z-[60] hidden">
+        <div class="absolute inset-0 bg-ink/50 backdrop-blur-sm" onclick="togglePrivacy()"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl max-h-[90vh] bg-paper shadow-2xl p-8 md:p-12 overflow-y-auto">
+            <button onclick="togglePrivacy()" class="absolute top-4 right-4 text-ink/50 hover:text-ink"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <h2 class="font-serif text-2xl mb-6">Политика конфиденциальности</h2>
+            <div class="text-sm text-ink/70 space-y-4 font-body leading-relaxed">
+                <p>Настоящая Политика конфиденциальности определяет порядок обработки и защиты персональных данных пользователей сайта lexiqa.ru.</p>
+                <h4 class="font-bold text-ink">1. Общие положения</h4>
+                <p>Оператор ставит своей важнейшей целью и условием осуществления своей деятельности соблюдение прав и свобод человека и гражданина при обработке его персональных данных, в том числе защиты прав на неприкосновенность частной жизни.</p>
+                <h4 class="font-bold text-ink">2. Сбор данных</h4>
+                <p>Мы собираем только те данные, которые вы добровольно предоставляете через формы обратной связи: имя, контактный телефон, адрес электронной почты, название компании.</p>
+                <h4 class="font-bold text-ink">3. Цели обработки</h4>
+                <p>Ваши данные используются исключительно для связи с вами, уточнения деталей заявки и оказания консультационных услуг. Мы не передаем ваши данные третьим лицам без вашего согласия, за исключением случаев, предусмотренных законодательством РФ.</p>
+                <h4 class="font-bold text-ink">4. Безопасность</h4>
+                <p>Мы принимаем необходимые организационные и технические меры для защиты ваших персональных данных от неправомерного доступа, уничтожения, изменения, блокирования, копирования, распространения.</p>
+            </div>
+            <button onclick="togglePrivacy()" class="mt-8 bg-ink text-white px-6 py-3 text-xs uppercase tracking-widest hover:bg-emerald transition">Закрыть</button>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function togglePanel() {
+            const panel = document.getElementById('sidePanel');
+            const overlay = document.getElementById('overlay');
+            panel.classList.toggle('open');
+            overlay.classList.toggle('open');
+            document.body.classList.toggle('overflow-hidden');
+        }
+
+        function toggleMobMenu() {
+            const menu = document.getElementById('mobMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        function togglePrivacy() {
+            const modal = document.getElementById('privacyModal');
+            modal.classList.toggle('hidden');
+        }
+
+        async function handleForm(e, btnId, statusId) {
+            e.preventDefault();
+            const form = e.target;
+            const btn = document.getElementById(btnId);
+            const status = document.getElementById(statusId);
+            const originalText = btn.innerText;
+
+            // Проверка чекбокса
+            const checkbox = form.querySelector('input[type="checkbox"]');
+            if (checkbox && !checkbox.checked) {
+                alert("Пожалуйста, подтвердите согласие на обработку данных.");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = "ОТПРАВКА...";
+            if(status) status.style.opacity = '0';
+            
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch('send.php', { method: 'POST', body: formData });
+                if (response.ok) {
+                    btn.innerText = "УСПЕШНО";
+                    if(status) status.style.opacity = '1';
+                    form.reset();
+                    
+                    setTimeout(() => {
+                        // Если это боковая форма, закрываем панель
+                        if (form.id === 'sideForm') {
+                            toggleSidePanel(); 
+                        }
+                        
+                        // Сбрасываем кнопку через время
+                        setTimeout(() => {
+                            btn.innerText = originalText;
+                            btn.disabled = false;
+                            if(status) status.style.opacity = '0';
+                        }, 1000);
+                    }, 1500);
+
+                } else { throw new Error('Error'); }
+            } catch (error) {
+                btn.innerText = "ОШИБКА";
+                setTimeout(() => { btn.innerText = originalText; btn.disabled = false; }, 3000);
+            }
+}
+
+            // Привязка событий
+        document.getElementById('sideForm').addEventListener('submit', (e) => handleForm(e, 'panelSubmitBtn', 'panelStatus'));
+        document.getElementById('footerForm').addEventListener('submit', (e) => handleForm(e, 'footerBtn', 'footerStatus'));
+    </script>
+</body>
+</html>

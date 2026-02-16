@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Экосистема плагинов Claude Cowork: аналитический обзор рынка — Lexiqa</title>
+    <meta name="description" content="Аналитическая справка Lexiqa по экосистеме плагинов Claude Cowork. Полный анализ реализованных решений, маркетплейсов, моделей монетизации и рисков.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#121212',
+                        paper: '#F7F5F2',
+                        emerald: '#1B4D3E',
+                        gold: '#B08D55',
+                        line: '#E0DCD5',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        body: ['Manrope', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* === БАЗОВЫЕ СТИЛИ === */
+        body { background-color: #F7F5F2; color: #121212; font-family: 'Manrope', sans-serif; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+
+        /* === НАВИГАЦИЯ === */
+        nav { position: sticky; top: 0; z-index: 50; background: rgba(247, 245, 242, 0.98); backdrop-filter: blur(12px); border-bottom: 1px solid #E0DCD5; }
+
+        /* === ССЫЛКИ В КОНТЕНТЕ === */
+        .content-link { color: #1B4D3E; text-decoration: underline; text-decoration-color: #B08D55; text-underline-offset: 3px; transition: all 0.2s; }
+        .content-link:hover { color: #B08D55; text-decoration-color: #1B4D3E; }
+
+        /* === ЯКОРЯ СЕКЦИЙ === */
+        .section-anchor { scroll-margin-top: 120px; }
+
+        /* === БИБЛИОГРАФИЯ === */
+        .bib-entry { padding-left: 2em; text-indent: -2em; }
+
+        /* === КАРТОЧКИ СТАТИСТИКИ === */
+        .stat-card { transition: transform 0.2s ease, box-shadow 0.2s ease; background: white; border: 1px solid #E0DCD5; }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(27,77,62,0.08); }
+
+        /* === ТАБЛИЦЫ === */
+        .data-table { border-collapse: separate; border-spacing: 0; }
+        .data-table th { background-color: #1B4D3E; color: #F7F5F2; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; padding: 12px 16px; text-align: left;}
+        .data-table td { padding: 12px 16px; border-bottom: 1px solid #E0DCD5; vertical-align: top; }
+        .data-table tbody tr:hover { background-color: rgba(176, 141, 85, 0.05); }
+
+        /* === ДОСЬЕ-КАРТОЧКИ === */
+        .dossier-card { border-left: 3px solid #B08D55; background: white; transition: border-color 0.2s; padding: 1.5rem; border-radius: 0 0.5rem 0.5rem 0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .dossier-card:hover { border-left-color: #1B4D3E; }
+
+        /* === TIMELINE === */
+        .timeline-item { position: relative; padding-left: 2rem; padding-bottom: 2rem; }
+        .timeline-item::before { content: ''; position: absolute; left: 0.4rem; top: 0.5rem; width: 8px; height: 8px; background: #B08D55; border-radius: 50%; z-index: 10; }
+        .timeline-item::after { content: ''; position: absolute; left: 0.65rem; top: 0.5rem; width: 1px; height: 100%; background: #E0DCD5; }
+        .timeline-item:last-child::after { display: none; }
+
+        /* === БЛОКИ ВНИМАНИЯ (RISKS) === */
+        .alert-box { background: white; border: 1px solid #E0DCD5; border-radius: 8px; padding: 1.5rem; transition: all 0.2s; height: 100%; }
+        .alert-box:hover { box-shadow: 0 4px 12px rgba(27,77,62,0.08); border-color: #B08D55; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <nav class="border-b border-line bg-paper/95 backdrop-blur z-50 sticky top-0 transition-all duration-300">
+        <div class="border-b border-line/50">
+            <div class="max-w-7xl mx-auto px-6 h-12 flex items-center justify-between">
+                <div class="flex items-center gap-8 w-full lg:w-auto justify-between lg:justify-start">
+                    <a href="https://lexiqa.ru" class="flex items-center gap-3 hover:opacity-70 transition shrink-0">
+                        <img src="logo.png" alt="Lexiqa" class="h-8 w-auto">
+                    </a>
+                    <span class="text-xs text-ink/40 uppercase tracking-widest hidden sm:block">Аналитика</span>
+                </div>
+
+                <div class="hidden md:flex gap-8 text-[10px] uppercase tracking-widest text-ink/60 font-medium">
+                    <a href="#" class="text-emerald font-bold border-b-2 border-emerald py-4">
+                        Экосистема Claude
+                    </a>
+                    
+                    <a href="saaspocalypse.html" class="hover:text-gold transition py-4 border-b-2 border-transparent hover:border-gold/30">
+                        SaaSpocalypse
+                    </a>
+                </div>
+
+                 <div class="md:hidden text-xs text-ink/40">Меню</div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 py-3 overflow-x-auto no-scrollbar">
+            <div class="flex gap-4 text-[9px] uppercase tracking-widest text-ink/50 whitespace-nowrap justify-start md:justify-center">
+                <a href="#exec-summary" class="hover:text-emerald transition px-2 py-1">Резюме</a>
+                <a href="#official-plugins" class="hover:text-emerald transition px-2 py-1">Официальные плагины</a>
+                <a href="#community" class="hover:text-emerald transition px-2 py-1">Community</a>
+                <a href="#marketplaces" class="hover:text-emerald transition px-2 py-1">Маркетплейсы</a>
+                <a href="#maturity" class="hover:text-emerald transition px-2 py-1">Стадии</a>
+                <a href="#market" class="hover:text-emerald transition px-2 py-1">Потенциал</a>
+                <a href="#monetization" class="hover:text-emerald transition px-2 py-1">Монетизация</a>
+                <a href="#risks" class="hover:text-emerald transition px-2 py-1">Риски</a>
+                <a href="#sources" class="hover:text-emerald transition px-2 py-1">Источники</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-6 py-16">
+
+        <header class="mb-16">
+            <div class="max-w-4xl">
+                <div class="text-xs uppercase tracking-widest text-gold font-bold mb-4">
+                    Аналитический материал
+                </div>
+
+                <h1 class="font-serif text-4xl md:text-6xl text-ink mb-6 leading-tight">
+                    Экосистема плагинов Claude Cowork: аналитический обзор рынка
+                </h1>
+
+                <p class="text-xl text-ink/70 leading-relaxed mb-8">
+                    Полный анализ реализованных решений, маркетплейсов, моделей монетизации и потенциала рынка плагинов для платформы Claude Cowork по состоянию на февраль 2026 года.
+                </p>
+
+                <div class="flex flex-wrap gap-4 text-sm text-ink/50">
+                    <span class="flex items-center gap-2">
+                        <i data-lucide="calendar" class="w-4 h-4"></i>
+                        16 Февраля 2026
+                    </span>
+                </div>
+            </div>
+        </header>
+
+        <section id="exec-summary" class="section-anchor mb-16">
+            <h2 class="font-serif text-3xl text-ink mb-8">Резюме</h2>
+
+            <div class="space-y-6 text-ink/80 leading-relaxed mb-8 text-lg">
+                <p>
+                    Anthropic официально запустила <strong>плагины для Claude Cowork</strong> в формате исследовательского превью (research preview) для всех платных пользователей в конце января 2026 года. Плагины представляют собой файловые пакеты, объединяющие функциональные навыки (skills), коннекторы MCP, slash-команды и суб-агентов, которые можно устанавливать локально, загружать из GitHub или создавать с нуля.
+                </p>
+
+                <p>
+                    Экосистема включает <strong>11 готовых плагинов от Anthropic</strong>, охватывающих ключевые бизнес-функции: продажи, юридическую работу, финансы, маркетинг, поддержку клиентов, продуктовый менеджмент, анализ данных, корпоративный поиск и научные исследования.
+                </p>
+
+                <p>
+                    Текущее состояние экосистемы характеризуется высокой динамикой: центральное управление плагинами для организаций находится в разработке, однако уже сейчас enterprise-сегмент активно пилотирует плагины для автоматизации критических процессов. Рынок движется от «экономики экспериментов» к формированию стандартизированных вертикальных решений.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                <div class="stat-card p-6 rounded-lg">
+                    <div class="text-4xl font-serif font-bold text-emerald mb-2">11</div>
+                    <div class="text-xs text-ink/60 uppercase tracking-wide font-bold">Официальных плагинов</div>
+                </div>
+                <div class="stat-card p-6 rounded-lg">
+                    <div class="text-4xl font-serif font-bold text-emerald mb-2">100+</div>
+                    <div class="text-xs text-ink/60 uppercase tracking-wide font-bold">Community-плагинов (Code)</div>
+                </div>
+                <div class="stat-card p-6 rounded-lg">
+                    <div class="text-4xl font-serif font-bold text-emerald mb-2">Jan '26</div>
+                    <div class="text-xs text-ink/60 uppercase tracking-wide font-bold">Запуск Research Preview</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="official-plugins" class="section-anchor mb-16">
+            <h2 class="font-serif text-3xl text-ink mb-8">Официальные плагины от Anthropic</h2>
+
+            <p class="text-ink/80 leading-relaxed mb-6">
+                Anthropic открыла репозиторий <code>anthropics/knowledge-work-plugins</code> на GitHub, где размещены 11 open-source плагинов. Все плагины доступны для установки через интерфейс Cowork или путём загрузки архива.
+            </p>
+
+            <div class="overflow-x-auto bg-white rounded-lg border border-line mb-8 shadow-sm">
+                <table class="data-table w-full">
+                    <thead>
+                        <tr>
+                            <th>Плагин</th>
+                            <th>Функционал</th>
+                            <th>Целевая аудитория</th>
+                            <th>Интеграции</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm text-ink/80">
+                        <tr>
+                            <td class="font-bold text-emerald">Sales</td>
+                            <td>Исследование клиентов, подготовка к звонкам, работа с CRM</td>
+                            <td>Sales teams, BDR</td>
+                            <td>HubSpot, Salesforce</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-emerald">Legal</td>
+                            <td>Проработка документов, выявление рисков, контроль комплаенса</td>
+                            <td>Юристы, комплаенс</td>
+                            <td>Contract repositories</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-emerald">Finance</td>
+                            <td>Анализ данных, построение моделей, мониторинг метрик</td>
+                            <td>CFO, аналитики</td>
+                            <td>BigQuery, Snowflake</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-emerald">Marketing</td>
+                            <td>Генерация контента, планирование кампаний, бренд-гайды</td>
+                            <td>Маркетологи</td>
+                            <td>CMS, соц. сети</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-emerald">Customer Support</td>
+                            <td>Триаж тикетов, черновики ответов, база знаний</td>
+                            <td>Служба поддержки</td>
+                            <td>Intercom, Zendesk</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-emerald">Product Management</td>
+                            <td>Спецификации, приоритизация, roadmap</td>
+                            <td>Product managers</td>
+                            <td>Linear, Jira</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-emerald">Data</td>
+                            <td>Запросы к dataset'ам, статистический анализ, дашборды</td>
+                            <td>Data scientists</td>
+                            <td>SQL базы, BI</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-emerald">Enterprise Search</td>
+                            <td>Поиск по инструментам компании</td>
+                            <td>Все сотрудники</td>
+                            <td>Slack, Notion, Jira, Drive</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-emerald">Biology Research</td>
+                            <td>Работа с научной литературой</td>
+                            <td>Исследователи</td>
+                            <td>PubMed, Benchling</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-emerald">Productivity</td>
+                            <td>Управление задачами, календарём, ежедневными процессами</td>
+                            <td>Все сотрудники</td>
+                            <td>Asana, Notion, Calendar</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-emerald">Plugin Create</td>
+                            <td>Создание и настройка собственных плагинов</td>
+                            <td>IT, разработчики</td>
+                            <td>—</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="bg-emerald/5 border-l-4 border-emerald p-8 rounded-r-lg">
+                <blockquote class="text-lg font-serif text-ink/90 italic mb-2">
+                    "Плагины превращают Claude в специалиста под конкретную роль, команду или компанию — с доступом к нужным данным, инструментам и контексту."
+                </blockquote>
+                <cite class="text-xs text-ink/60 not-italic uppercase tracking-widest">— Из официального блога Anthropic</cite>
+            </div>
+        </section>
+
+        <section id="community" class="section-anchor mb-16">
+            <h2 class="font-serif text-3xl text-ink mb-8">Community-плагины и кастомные решения</h2>
+
+            <p class="text-ink/80 leading-relaxed mb-8">
+                Помимо официальных плагинов, формируется экосистема кастомных решений от сообщества разработчиков и консалтинговых компаний.
+            </p>
+
+            <div class="space-y-6">
+                <div class="dossier-card">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-serif text-xl text-ink font-bold">Content Repurposing Plugin</h3>
+                        <div class="flex gap-2">
+                            <span class="px-2 py-1 bg-emerald/10 text-emerald text-[10px] uppercase font-bold tracking-wider rounded">Маркетинг</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-ink/70 leading-relaxed mb-3">
+                        Плагин для автоматической трансформации одного контент-объекта в <strong>25+ материалов</strong> под разные площадки (Substack, LinkedIn, Twitter, Instagram и др.). Демонстрируется как готовый архив для загрузки в Cowork.
+                    </p>
+                </div>
+
+                <div class="dossier-card">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-serif text-xl text-ink font-bold">Enterprise-решения</h3>
+                        <div class="flex gap-2">
+                            <span class="px-2 py-1 bg-gold/10 text-gold text-[10px] uppercase font-bold tracking-wider rounded">Консалтинг</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-ink/70 leading-relaxed mb-3">
+                        Консалтинговые компании разрабатывают плагины под конкретные отрасли: <strong>legal document review</strong> для M&A, <strong>sales pipeline automation</strong> для B2B SaaS, <strong>compliance monitoring</strong> для финансовых институтов.
+                    </p>
+                </div>
+
+                <div class="dossier-card">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-serif text-xl text-ink font-bold">Pixel Art Generator</h3>
+                        <div class="flex gap-2">
+                            <span class="px-2 py-1 bg-emerald/10 text-emerald text-[10px] uppercase font-bold tracking-wider rounded">Creative</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-ink/70 leading-relaxed mb-3">
+                        Пример узкоспециализированного плагина из маркетплейса Claude Code — генерация pixel-art через интеграцию с <strong>Aseprite</strong>. Показывает, как могут выглядеть нишевые инструменты для Cowork.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="marketplaces" class="section-anchor mb-16">
+            <h2 class="font-serif text-3xl text-ink mb-8">Платформы и маркетплейсы</h2>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="bg-white border border-line rounded-lg p-8">
+                    <h4 class="font-serif text-xl text-emerald mb-4">Текущие (Claude Code)</h4>
+                    <ul class="space-y-4">
+                        <li class="border-b border-line pb-4 last:border-0 last:pb-0">
+                            <strong class="text-ink block mb-1">claudemarketplaces.com</strong>
+                            <span class="text-sm text-ink/70">Community-платформа с сотнями расширений для разработки, дизайна и анализа данных.</span>
+                        </li>
+                        <li class="border-b border-line pb-4 last:border-0 last:pb-0">
+                            <strong class="text-ink block mb-1">claudecodemarketplace.com</strong>
+                            <span class="text-sm text-ink/70">Альтернативная платформа распространения узкоспециализированных решений.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-white border border-line rounded-lg p-8">
+                    <h4 class="font-serif text-xl text-gold mb-4">Планируемые (Cowork)</h4>
+                    <ul class="space-y-4">
+                        <li class="border-b border-line pb-4 last:border-0 last:pb-0">
+                            <strong class="text-ink block mb-1">Public Marketplace</strong>
+                            <span class="text-sm text-ink/70">Публичный каталог плагинов для Cowork. Публикация, оценка и установка через единый интерфейс.</span>
+                        </li>
+                        <li class="border-b border-line pb-4 last:border-0 last:pb-0">
+                            <strong class="text-ink block mb-1">Corporate Marketplaces</strong>
+                            <span class="text-sm text-ink/70">Внутренние маркетплейсы организаций с управлением через <code>.claude/settings.json</code> и автоматической установкой.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="maturity" class="section-anchor mb-16">
+            <h2 class="font-serif text-3xl text-ink mb-8">Стадии развития экосистемы</h2>
+
+            <div class="space-y-8">
+                <div class="timeline-item">
+                    <div class="font-bold text-emerald text-sm uppercase tracking-wide mb-2">Уровень 1: Реализовано</div>
+                    <h4 class="font-serif text-xl text-ink mb-3">Базовая доступность</h4>
+                    <ul class="list-disc list-outside ml-4 text-sm text-ink/70 space-y-2">
+                        <li>11 официальных плагинов от Anthropic.</li>
+                        <li>Локальная установка из интерфейса, .zip-архива или GitHub.</li>
+                        <li>Поддержка MCP-коннекторов к внешним сервисам (CRM, Slack, Jira, Figma, Snowflake).</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="font-bold text-gold text-sm uppercase tracking-wide mb-2">Уровень 2: В процессе</div>
+                    <h4 class="font-serif text-xl text-ink mb-3">Бета-тестирование</h4>
+                    <ul class="list-disc list-outside ml-4 text-sm text-ink/70 space-y-2">
+                        <li>Research preview для всех платных пользователей.</li>
+                        <li>Локальное хранение плагинов на машине пользователя.</li>
+                        <li>Пилоты организационного распространения и private plugin marketplaces.</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="font-bold text-ink/40 text-sm uppercase tracking-wide mb-2">Уровень 3: Перспектива</div>
+                    <h4 class="font-serif text-xl text-ink mb-3">Институционализация</h4>
+                    <ul class="list-disc list-outside ml-4 text-sm text-ink/70 space-y-2">
+                        <li>Публичные и частные маркетплейсы под Cowork.</li>
+                        <li>Сертификация и аудит плагинов (security, проверка коннекторов).</li>
+                        <li>Модели монетизации: SaaS, плагин-пакеты, white-label решения.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="market" class="section-anchor mb-16">
+            <h2 class="font-serif text-3xl text-ink mb-8">Потенциал рынка</h2>
+
+            <h3 class="font-serif text-xl text-ink mb-6">Вертикальные сегменты</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                <div class="stat-card p-6 rounded-lg">
+                    <h4 class="font-bold text-emerald mb-2">Legal & Compliance</h4>
+                    <p class="text-sm text-ink/70 mb-2">M&A due diligence, contract review. Высокая маржинальность, критичность точности.</p>
+                    <div class="text-xs font-bold text-emerald uppercase">Потенциал: Очень высокий</div>
+                </div>
+                <div class="stat-card p-6 rounded-lg">
+                    <h4 class="font-bold text-emerald mb-2">Financial Services</h4>
+                    <p class="text-sm text-ink/70 mb-2">Анализ моделей, fraud detection. Требует сертификации.</p>
+                    <div class="text-xs font-bold text-emerald uppercase">Потенциал: Высокий</div>
+                </div>
+                <div class="stat-card p-6 rounded-lg">
+                    <h4 class="font-bold text-emerald mb-2">Healthcare & Biotech</h4>
+                    <p class="text-sm text-ink/70 mb-2">Научные публикации, drug discovery support.</p>
+                    <div class="text-xs font-bold text-emerald uppercase">Потенциал: Высокий</div>
+                </div>
+                <div class="stat-card p-6 rounded-lg">
+                    <h4 class="font-bold text-gold mb-2">Marketing & Media</h4>
+                    <p class="text-sm text-ink/70 mb-2">Content repurposing, SEO. Массовый спрос, высокая конкуренция.</p>
+                    <div class="text-xs font-bold text-gold uppercase">Потенциал: Средний</div>
+                </div>
+            </div>
+
+            <h3 class="font-serif text-xl text-ink mb-6">Горизонтальные функции</h3>
+            <div class="overflow-x-auto bg-white rounded-lg border border-line shadow-sm">
+                <table class="data-table w-full">
+                    <thead>
+                        <tr>
+                            <th>Функция</th>
+                            <th>Описание</th>
+                            <th>Потенциал</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm text-ink/80">
+                        <tr>
+                            <td class="font-bold">Sales Enablement</td>
+                            <td>CRM integration, lead qualification</td>
+                            <td class="text-emerald font-bold">Очень высокий</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Data Analytics</td>
+                            <td>SQL queries, statistical analysis</td>
+                            <td class="text-emerald font-bold">Высокий</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Customer Support</td>
+                            <td>Ticket triage, knowledge base</td>
+                            <td class="text-emerald font-bold">Высокий</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Product Mgmt</td>
+                            <td>Specs, roadmap, prioritization</td>
+                            <td class="text-gold font-bold">Средний</td>
+                        </tr>
+                         <tr>
+                            <td class="font-bold">HR & Recruitment</td>
+                            <td>Resume screening, interview prep</td>
+                            <td class="text-gold font-bold">Средний</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="monetization" class="section-anchor mb-16">
+            <h2 class="font-serif text-3xl text-ink mb-8">Модели монетизации</h2>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="dossier-card">
+                    <h3 class="font-serif text-lg text-emerald font-bold mb-3">1. SaaS (Subscription)</h3>
+                    <p class="text-sm text-ink/80 mb-4">
+                        Продажа плагина как продукта с подпиской. Пример: «Legal Document Review Plugin» за $99/мес.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 text-xs">
+                        <div>
+                            <span class="font-bold text-emerald block mb-1">Плюсы:</span>
+                            <ul class="text-ink/60 space-y-1">
+                                <li>• Предсказуемый доход</li>
+                                <li>• Масштабируемость</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <span class="font-bold text-gold block mb-1">Риски:</span>
+                            <ul class="text-ink/60 space-y-1">
+                                <li>• Высокий отток (churn)</li>
+                                <li>• Конкуренция с бесплатным</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dossier-card">
+                    <h3 class="font-serif text-lg text-emerald font-bold mb-3">2. Консалтинг + Плагины</h3>
+                    <p class="text-sm text-ink/80 mb-4">
+                        Плагины как часть услуг по внедрению ИИ. Включает кастомизацию, обучение и поддержку.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 text-xs">
+                        <div>
+                            <span class="font-bold text-emerald block mb-1">Плюсы:</span>
+                            <ul class="text-ink/60 space-y-1">
+                                <li>• Высокая маржа</li>
+                                <li>• Долгосрочные контракты</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <span class="font-bold text-gold block mb-1">Риски:</span>
+                            <ul class="text-ink/60 space-y-1">
+                                <li>• Сложно масштабировать</li>
+                                <li>• Требует экспертизы</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dossier-card">
+                    <h3 class="font-serif text-lg text-emerald font-bold mb-3">3. White-label / Отраслевые</h3>
+                    <p class="text-sm text-ink/80 mb-4">
+                        Создание решений под бренд партнера (напр. «Banking Compliance Suite») для enterprise-клиентов.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 text-xs">
+                        <div>
+                            <span class="font-bold text-emerald block mb-1">Плюсы:</span>
+                            <ul class="text-ink/60 space-y-1">
+                                <li>• Высокие чеки</li>
+                                <li>• Партнерские каналы</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <span class="font-bold text-gold block mb-1">Риски:</span>
+                            <ul class="text-ink/60 space-y-1">
+                                <li>• Длинный цикл продаж</li>
+                                <li>• Регуляторная нагрузка</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dossier-card">
+                    <h3 class="font-serif text-lg text-emerald font-bold mb-3">4. Freemium + Premium</h3>
+                    <p class="text-sm text-ink/80 mb-4">
+                        Бесплатная база, платные продвинутые функции (интеграции, приоритетная поддержка).
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 text-xs">
+                        <div>
+                            <span class="font-bold text-emerald block mb-1">Плюсы:</span>
+                            <ul class="text-ink/60 space-y-1">
+                                <li>• Быстрый рост базы</li>
+                                <li>• Виральность</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <span class="font-bold text-gold block mb-1">Риски:</span>
+                            <ul class="text-ink/60 space-y-1">
+                                <li>• Низкая конверсия</li>
+                                <li>• Затраты на поддержку</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 bg-gold/5 p-6 rounded border border-gold/20">
+                <blockquote class="text-sm font-serif text-ink/80 italic text-center">
+                    "Успешные плагины будут те, которые решают конкретную, измеримую бизнес-проблему и доказывают ROI в течение первых 30 дней использования."
+                </blockquote>
+                <div class="text-center text-xs text-ink/40 mt-2">— Из анализа Gend.co по enterprise-внедрению</div>
+            </div>
+        </section>
+
+        <section id="risks" class="section-anchor mb-16">
+            <h2 class="font-serif text-3xl text-ink mb-8">Риски и барьеры входа</h2>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="alert-box">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i data-lucide="cpu" class="w-5 h-5 text-gold"></i>
+                        <h3 class="font-bold text-ink">Технологические</h3>
+                    </div>
+                    <ul class="list-disc list-outside ml-4 text-sm text-ink/70 space-y-2">
+                        <li><strong>API Breaking Changes:</strong> Изменения платформы ломают плагины.</li>
+                        <li><strong>Зависимость:</strong> Anthropic полностью контролирует правила.</li>
+                        <li><strong>Performance:</strong> Плохой код снижает UX.</li>
+                    </ul>
+                </div>
+
+                <div class="alert-box">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i data-lucide="shield-alert" class="w-5 h-5 text-gold"></i>
+                        <h3 class="font-bold text-ink">Регуляторные</h3>
+                    </div>
+                    <ul class="list-disc list-outside ml-4 text-sm text-ink/70 space-y-2">
+                        <li><strong>EU AI Act:</strong> Требования к аудиту (август 2026).</li>
+                        <li><strong>Data privacy:</strong> GDPR, CCPA — ограничения на данные.</li>
+                        <li><strong>Sector-specific:</strong> Сертификации для финансов и медицины.</li>
+                    </ul>
+                </div>
+
+                <div class="alert-box">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i data-lucide="lock" class="w-5 h-5 text-gold"></i>
+                        <h3 class="font-bold text-ink">Безопасность</h3>
+                    </div>
+                    <ul class="list-disc list-outside ml-4 text-sm text-ink/70 space-y-2">
+                        <li><strong>Утечки данных:</strong> Доступ к конфиденциальной информации.</li>
+                        <li><strong>Malicious plugins:</strong> Вредоносный код в community-версиях.</li>
+                        <li><strong>Credential management:</strong> Хранение API-ключей.</li>
+                    </ul>
+                </div>
+
+                <div class="alert-box">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i data-lucide="users" class="w-5 h-5 text-gold"></i>
+                        <h3 class="font-bold text-ink">Конкурентные</h3>
+                    </div>
+                    <ul class="list-disc list-outside ml-4 text-sm text-ink/70 space-y-2">
+                        <li><strong>Commoditization:</strong> Копирование популярных функций.</li>
+                        <li><strong>Anthropic Native:</strong> Интеграция успешных функций в ядро.</li>
+                        <li><strong>Альтернативы:</strong> OpenAI GPTs, MS Copilot Studio.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="sources" class="section-anchor mb-16">
+            <h2 class="font-serif text-3xl text-ink mb-8">Источники для мониторинга</h2>
+            <div class="bg-white border border-line rounded-lg p-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-bold text-emerald mb-3">Официальные каналы</h4>
+                        <ul class="text-sm text-ink/70 space-y-2">
+                            <li>• <strong>GitHub:</strong> anthropics/knowledge-work-plugins</li>
+                            <li>• <strong>Blog:</strong> claude.com/blog</li>
+                            <li>• <strong>Docs:</strong> code.claude.com/docs</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-emerald mb-3">Community & Аналитика</h4>
+                        <ul class="text-sm text-ink/70 space-y-2">
+                            <li>• <strong>Reddit:</strong> r/ClaudeAI</li>
+                            <li>• <strong>Reworked, Gend.co:</strong> Enterprise-аналитика</li>
+                            <li>• <strong>Marketplaces:</strong> claudemarketplaces.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16 bg-emerald/5 border border-emerald rounded-lg p-8">
+            <h2 class="font-serif text-3xl text-ink mb-4">Заключение</h2>
+            <p class="text-ink/80 leading-relaxed mb-4">
+                Экосистема плагинов для Claude Cowork находится в стадии активного формирования. Февраль 2026 года — это переходный момент от «экспериментов и proof-of-concept» к построению устойчивых бизнес-моделей вокруг плагинов.
+            </p>
+            <p class="text-ink/80 leading-relaxed mb-4">
+                Уже сейчас 11 официальных плагинов от Anthropic демонстрируют, что платформа готова решать критичные бизнес-задачи. Community активно создаёт кастомные решения, а консалтинговые компании упаковывают плагины в enterprise-пакеты.
+            </p>
+            <p class="text-ink/80 leading-relaxed">
+                Ключевой вызов — переход от «экономики экспериментов» к «экономике доказательств». Игроки, способные продемонстрировать измеримую бизнес-ценность плагинов, пройти регуляторные требования и обеспечить безопасность данных, получат конкурентное преимущество.
+            </p>
+        </section>
+
+        <section id="references" class="section-anchor mb-16">
+            <h2 class="font-serif text-3xl text-ink mb-8 pb-4 border-b-2 border-emerald">Источники и литература</h2>
+
+            <div class="bg-white border border-line rounded-lg p-8 space-y-4">
+                <div class="bib-entry text-sm text-ink/70">
+                    <strong>1.</strong> Claude Help Center (2026). <em>Getting started with Cowork.</em>
+                </div>
+                <div class="bib-entry text-sm text-ink/70">
+                    <strong>2.</strong> Anthropic (2026). <em>Customize Cowork with plugins.</em> claude.com/blog
+                </div>
+                <div class="bib-entry text-sm text-ink/70">
+                    <strong>3.</strong> Anthropic GitHub (2026). <em>knowledge-work-plugins repository.</em>
+                </div>
+                <div class="bib-entry text-sm text-ink/70">
+                    <strong>4.</strong> Reddit r/ClaudeAI (2026). <em>Cowork now supports plugins.</em>
+                </div>
+                <div class="bib-entry text-sm text-ink/70">
+                    <strong>5-6.</strong> Reworked (2026); Claude Cowork Guide (2026).
+                </div>
+                <div class="bib-entry text-sm text-ink/70">
+                    <strong>7-8.</strong> Claude Code Documentation (2026).
+                </div>
+                <div class="bib-entry text-sm text-ink/70">
+                    <strong>9-10.</strong> Gend.co (2026); TechWize (2026).
+                </div>
+                <div class="bib-entry text-sm text-ink/70">
+                    <strong>15-17.</strong> LinkedIn, Lilys AI, Substack (Alex McFarland) (2026).
+                </div>
+                <div class="bib-entry text-sm text-ink/70">
+                    <strong>20.</strong> Claude Code Plugin Marketplace (2026).
+                </div>
+                <div class="bib-entry text-sm text-ink/70">
+                    <strong>23-27.</strong> claudemarketplaces.com; code.claude.com/docs.
+                </div>
+                <div class="bib-entry text-sm text-ink/70">
+                    <strong>39.</strong> Trust Insights (2026). <em>So What? Plug-ins for Claude Cowork.</em>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t border-line py-12">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <img src="logo.png" alt="Lexiqa" class="h-8 w-auto opacity-70">
+                    <span class="text-xs text-ink/40 uppercase tracking-widest">Аналитические данные</span>
+                </div>
+                <div class="flex gap-8 text-xs text-ink/50 uppercase tracking-widest">
+                    <a href="https://lexiqa.ru" class="hover:text-emerald transition">lexiqa.ru</a>
+                    <a href="mailto:info@lexiqa.ru" class="hover:text-emerald transition">Связаться</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

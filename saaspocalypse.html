@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>SaaSpocalypse — Lexiqa</title>
+  <meta name="description" content="Lexiqa: фактологический разбор распродажи в секторе юридического и профессионального ПО после выхода юридического плагина для Claude Cowork." />
+
+  <!-- Lexiqa Design System (как в вашем roi-ai.html) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#121212',
+            paper: '#F7F5F2',
+            emerald: '#1B4D3E',
+            gold: '#B08D55',
+            line: '#E0DCD5',
+            emerald5: 'rgba(27,77,62,0.05)',
+            emerald10: 'rgba(27,77,62,0.10)',
+            gold10: 'rgba(176,141,85,0.10)',
+            paper95: 'rgba(247,245,242,0.98)'
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            body: ['Manrope', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+
+  <style>
+    body { background-color: #F7F5F2; color: #121212; font-family: Manrope, sans-serif; }
+    .font-serif { font-family: "Playfair Display", serif; }
+
+    nav { backdrop-filter: blur(12px); }
+
+    .content-link{
+      color:#1B4D3E;
+      text-decoration: underline;
+      text-decoration-color:#B08D55;
+      text-underline-offset:3px;
+      transition: all 0.2s;
+    }
+    .content-link:hover{
+      color:#B08D55;
+      text-decoration-color:#1B4D3E;
+    }
+
+    .section-anchor { scroll-margin-top: 120px; }
+
+    .stat-card{
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .stat-card:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(27,77,62,0.08);
+    }
+
+    .data-table{
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    .data-table th{
+      background-color:#1B4D3E;
+      color:#F7F5F2;
+      font-weight:600;
+      text-transform: uppercase;
+      letter-spacing:0.05em;
+      font-size:0.75rem;
+    }
+    .data-table td{
+      border-bottom:1px solid #E0DCD5;
+    }
+    .data-table tbody tr:hover{
+      background-color: rgba(27,77,62,0.03);
+    }
+
+    .dossier-card{
+      border-left: 3px solid #B08D55;
+      background: white;
+      transition: border-color 0.2s;
+    }
+    .dossier-card:hover{
+      border-left-color:#1B4D3E;
+    }
+
+    .timeline-item{ position: relative; padding-left: 2rem; }
+    .timeline-item:before{
+      content: '';
+      position:absolute;
+      left:0.4rem;
+      top:0.5rem;
+      width:8px;
+      height:8px;
+      background:#B08D55;
+      border-radius:50%;
+    }
+    .timeline-item:after{
+      content:'';
+      position:absolute;
+      left:0.65rem;
+      top:1.5rem;
+      width:1px;
+      height: calc(100% - 0.5rem);
+      background:#E0DCD5;
+    }
+    .timeline-item:last-child:after{ display:none; }
+
+    .plot-wrap{
+      background: white;
+      border: 1px solid #E0DCD5;
+      border-radius: 0.75rem;
+      padding: 1rem;
+    }
+  </style>
+</head>
+
+<body class="antialiased">
+
+    <nav class="border-b border-line bg-paper/95 backdrop-blur z-50 sticky top-0 transition-all duration-300">
+        <div class="border-b border-line/50">
+            <div class="max-w-7xl mx-auto px-6 h-12 flex items-center justify-between">
+                <div class="flex items-center gap-8 w-full lg:w-auto justify-between lg:justify-start">
+                    <a href="https://lexiqa.ru" class="flex items-center gap-3 hover:opacity-70 transition shrink-0">
+                        <img src="logo.png" alt="Lexiqa" class="h-8 w-auto">
+                    </a>
+                    <span class="text-xs text-ink/40 uppercase tracking-widest hidden sm:block">Аналитика</span>
+                </div>
+
+                <div class="hidden md:flex gap-8 text-[10px] uppercase tracking-widest text-ink/60 font-medium">
+                    <a href="cowork_plugins.html" class="hover:text-gold transition py-4 border-b-2 border-transparent hover:border-gold/30">
+                        Экосистема Claude
+                    </a>
+                    
+                    <a href="#" class="text-emerald font-bold border-b-2 border-emerald py-4">
+                        SaaSpocalypse
+                    </a>
+                </div>
+
+                 <div class="md:hidden text-xs text-ink/40">Меню</div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 py-3 overflow-x-auto no-scrollbar">
+            <div class="flex gap-4 text-[9px] uppercase tracking-widest text-ink/50 whitespace-nowrap justify-start md:justify-center">
+                <a href="#intro" class="hover:text-emerald transition px-2 py-1">Что случилось</a>
+                <a href="#affected" class="hover:text-emerald transition px-2 py-1">Кто пострадал</a>
+                <a href="#charts" class="hover:text-emerald transition px-2 py-1">Курсы акций</a>
+                <a href="#analysis" class="hover:text-emerald transition px-2 py-1">Анализ</a>
+                <a href="#references" class="hover:text-emerald transition px-2 py-1">Источники</a>
+            </div>
+        </div>
+    </nav>
+
+  <main class="max-w-6xl mx-auto px-6 py-16">
+
+    <!-- HERO -->
+    <header class="mb-16">
+      <div class="max-w-4xl">
+        <div class="text-xs uppercase tracking-widest text-gold font-bold mb-4">Аналитический материал</div>
+        <h1 class="font-serif text-5xl md:text-6xl text-ink mb-6 leading-tight">
+          SaaSpocalypse: распродажа в секторе юридического и профессионального ПО после выхода юридического плагина Claude Cowork
+        </h1>
+        <p class="text-xl text-ink/70 leading-relaxed mb-8">
+          Рынок испугался не «улучшения функций», а возможной смены архитектуры: когда рассуждающая система начинает выполнять работу целиком,
+          прежние продукты рискуют стать промежуточным звеном между клиентом и результатом.
+        </p>
+        <div class="flex flex-wrap gap-4 text-sm text-ink/50">
+          <span class="flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4"></i>16 Февраля 2026</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Вводная / проблема -->
+    <section class="section-anchor mb-16" id="intro">
+      <h2 class="font-serif text-4xl text-ink mb-8">1) В чем состоит проблема</h2>
+      <div class="space-y-6 text-ink/80 leading-relaxed mb-8">
+        <p>
+          Юридический сегмент — чувствительная зона для «агентов результата»: здесь дорого стоит время специалистов,
+          но ещё дороже — цена ошибки и юридические последствия.
+          Поэтому рынок десятилетиями платил премию за проверенные базы, рабочие места и процессы контроля качества.
+        </p>
+        <p>
+          Выход юридического плагина для Claude Cowork был интерпретирован как попытка «подняться выше» обычной модели поставщика
+          и занять место непосредственно в рабочем процессе — там, где происходит принятие решений и создается итоговый документ.
+        </p>
+        <p class="text-sm text-ink/60 uppercase tracking-widest">
+          Что важно: мы не обсуждаем «нравится / не нравится» технология — мы разбираем риск перераспределения прибыли и переговорной силы.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="stat-card bg-white border border-line rounded-lg p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-9 h-9 bg-gold10 rounded-full flex items-center justify-center">
+              <i data-lucide="zap" class="w-4 h-4 text-gold"></i>
+            </div>
+            <h3 class="font-serif text-lg text-ink">Триггер</h3>
+          </div>
+          <p class="text-sm text-ink/70">
+            «Юридический плагин» как сигнал: агент претендует на часть работы, за которую раньше платили подписки и лицензии.
+          </p>
+        </div>
+
+        <div class="stat-card bg-white border border-line rounded-lg p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-9 h-9 bg-emerald10 rounded-full flex items-center justify-center">
+              <i data-lucide="layers" class="w-4 h-4 text-emerald"></i>
+            </div>
+            <h3 class="font-serif text-lg text-ink">Механизм</h3>
+          </div>
+          <p class="text-sm text-ink/70">
+            Перенос ценности в слой «исполнения результата»: не поиск и интерфейс, а завершение задачи с контролем качества.
+          </p>
+        </div>
+
+        <div class="stat-card bg-white border border-line rounded-lg p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-9 h-9 bg-gold10 rounded-full flex items-center justify-center">
+              <i data-lucide="alert-triangle" class="w-4 h-4 text-gold"></i>
+            </div>
+            <h3 class="font-serif text-lg text-ink">Риск</h3>
+          </div>
+          <p class="text-sm text-ink/70">
+            Коммодитизация функций: если часть задач «упакована» внутрь агента, прежние решения теряют рыночную премию.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Кто пострадал -->
+    <section class="section-anchor mb-16" id="affected">
+      <h2 class="font-serif text-4xl text-ink mb-8">2) Кто пострадал сильнее всего</h2>
+      <p class="text-ink/80 leading-relaxed mb-8">
+        Наиболее чувствительны компании, чья выручка завязана на профессиональные подписки, юридические базы и рабочие места,
+        а также на регулярные платежи за доступ к контенту и инструментам внутри правового контура.
+      </p>
+
+      <div class="overflow-x-auto bg-white rounded-lg border border-line mb-8">
+        <table class="data-table w-full">
+          <thead>
+            <tr>
+              <th class="px-6 py-4 text-left">Компания</th>
+              <th class="px-6 py-4 text-left">Профиль</th>
+              <th class="px-6 py-4 text-left">Почему уязвима</th>
+              <th class="px-6 py-4 text-left">Что отслеживать дальше</th>
+            </tr>
+          </thead>
+          <tbody class="text-sm">
+            <tr>
+              <td class="px-6 py-4 font-bold">RELX (LexisNexis)</td>
+              <td class="px-6 py-4">Правовые и информационные сервисы</td>
+              <td class="px-6 py-4">Риск «обхода интерфейса»: часть запросов и черновиков уходит в универсальный агент</td>
+              <td class="px-6 py-4">Лицензирование контента, встраивание проверяемых ссылок на источники</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 font-bold">Wolters Kluwer</td>
+              <td class="px-6 py-4">Право, налоги, комплаенс</td>
+              <td class="px-6 py-4">Функции рабочих процессов могут быть «собраны» в единую среду агента</td>
+              <td class="px-6 py-4">Удержание клиентов через качество данных, контуры доверия и аудит</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 font-bold">Thomson Reuters (Westlaw)</td>
+              <td class="px-6 py-4">Правовые базы и рабочие места</td>
+              <td class="px-6 py-4">Рынок пересматривает премию за доступ и интерфейс, если агент «делает работу сам»</td>
+              <td class="px-6 py-4">Скорость продуктовой перестройки и монетизация встроенных возможностей ИИ</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="bg-emerald5 border-l-4 border-gold p-8 rounded-r-lg">
+        <blockquote class="text-lg font-serif text-ink/90 italic mb-4">
+          «Это не спор о том, станет ли ИИ частью юридической работы. Это спор о том, кто будет владельцем результата и доверия».
+        </blockquote>
+        <cite class="text-sm text-ink/60 not-italic">Из принципов Lexiqa</cite>
+      </div>
+    </section>
+
+    <!-- Графики -->
+    <section class="section-anchor mb-16" id="charts">
+      <h2 class="font-serif text-4xl text-ink mb-8">3) Графики акций (15.01–15.02)</h2>
+      <p class="text-ink/80 leading-relaxed mb-8">
+        Красная пунктирная линия — 03.02.2026, день, который рынок воспринял как момент смены ожиданий.
+        Данные приведены как цены закрытия.
+      </p>
+
+      <div class="grid md:grid-cols-1 gap-6">
+
+        <div class="plot-wrap">
+          <div class="flex items-start justify-between gap-6 mb-3">
+            <div>
+              <h3 class="font-serif text-2xl text-ink">Thomson Reuters (TRI:TOR)</h3>
+              <p class="text-sm text-ink/60">Источник: FT Markets Data (исторические цены TRI:TOR).</p>
+            </div>
+            <a class="content-link text-sm shrink-0" target="_blank" rel="noreferrer"
+               href="https://markets.ft.com/data/equities/tearsheet/historical?s=TRI%3ATOR">Открыть источник</a>
+          </div>
+          <div id="plot-tri" class="w-full" style="height: 360px;"></div>
+        </div>
+
+        <div class="plot-wrap">
+          <div class="flex items-start justify-between gap-6 mb-3">
+            <div>
+              <h3 class="font-serif text-2xl text-ink">RELX (RELX:NYQ)</h3>
+              <p class="text-sm text-ink/60">Источник: FT Markets Data (исторические цены RELX:NYQ).</p>
+            </div>
+            <a class="content-link text-sm shrink-0" target="_blank" rel="noreferrer"
+               href="https://markets.ft.com/data/equities/tearsheet/historical?s=RELX%3ANYQ">Открыть источник</a>
+          </div>
+          <div id="plot-relx" class="w-full" style="height: 360px;"></div>
+        </div>
+
+        <div class="plot-wrap">
+          <div class="flex items-start justify-between gap-6 mb-3">
+            <div>
+              <h3 class="font-serif text-2xl text-ink">Wolters Kluwer (WKL:AMS)</h3>
+              <p class="text-sm text-ink/60">Источник: Twelve Data (исторические цены WKL, Euronext).</p>
+            </div>
+            <a class="content-link text-sm shrink-0" target="_blank" rel="noreferrer"
+               href="https://twelvedata.com/markets/290351/stock/euronext/wkl/historical-data">Открыть источник</a>
+          </div>
+          <div id="plot-wkl" class="w-full" style="height: 360px;"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Полный разбор: причинно-следственная цепочка -->
+    <section class="section-anchor mb-16" id="analysis">
+      <h2 class="font-serif text-4xl text-ink mb-8">4) Полный разбор ситуации</h2>
+
+      <div class="space-y-8">
+        <div class="timeline-item">
+          <div class="font-bold text-gold mb-1">1</div>
+          <h4 class="font-serif text-lg text-ink mb-2">Рынок увидел «исполнителя», а не «помощника»</h4>
+          <p class="text-sm text-ink/70">
+            Если система не просто подсказывает, а ведёт задачу к завершению, ценность «оболочки» и отдельных функций падает.
+            Тогда выручка, основанная на подписке за место и доступ, становится объектом пересчёта.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="font-bold text-gold mb-1">2</div>
+          <h4 class="font-serif text-lg text-ink mb-2">Переоценка премии за контент и интерфейс</h4>
+          <p class="text-sm text-ink/70">
+            Исторически премия держалась на курируемых базах, удобном поиске, стандартах и доверии.
+            В «агентной» логике интерфейс может уехать внутрь агента, а контент — стать входом, а не продуктом.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="font-bold text-gold mb-1">3</div>
+          <h4 class="font-serif text-lg text-ink mb-2">Риск юридической ответственности не исчезает</h4>
+          <p class="text-sm text-ink/70">
+            Даже если агент ускоряет работу, остаются вопросы: проверяемость выводов, источники, хранение и обработка документов, режимы тайны,
+            а также процедурная обязанность юриста контролировать итог.
+            Это — естественный «тормоз» для мгновенной замены профессиональных систем.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="font-bold text-gold mb-1">4</div>
+          <h4 class="font-serif text-lg text-ink mb-2">Сценарии на 6–18 месяцев</h4>
+          <p class="text-sm text-ink/70">
+            Вероятна конкуренция «контуров доверия»: выигрывают те, кто обеспечит проверяемость, ссылочность на источники и юридически корректный режим работы с данными,
+            а не только «скорость ответа».
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Источники -->
+    <section class="section-anchor mb-16" id="references">
+      <h2 class="font-serif text-3xl text-ink mb-8 pb-4 border-b-2 border-emerald">Источники данных</h2>
+
+      <div class="bg-white border border-line rounded-lg p-8 space-y-4 text-sm text-ink/70">
+        <div class="bib-entry">
+          <strong>1.</strong> Financial Times Markets Data — RELX (RELX:NYQ), исторические цены.
+          <a class="content-link" href="https://markets.ft.com/data/equities/tearsheet/historical?s=RELX%3ANYQ" target="_blank" rel="noreferrer">
+            markets.ft.com
+          </a>
+        </div>
+        <div class="bib-entry">
+          <strong>2.</strong> Financial Times Markets Data — Thomson Reuters (TRI:TOR), исторические цены.
+          <a class="content-link" href="https://markets.ft.com/data/equities/tearsheet/historical?s=TRI%3ATOR" target="_blank" rel="noreferrer">
+            markets.ft.com
+          </a>
+        </div>
+        <div class="bib-entry">
+          <strong>3.</strong> Twelve Data — Wolters Kluwer (WKL), исторические цены (Euronext).
+          <a class="content-link" href="https://twelvedata.com/markets/290351/stock/euronext/wkl/historical-data" target="_blank" rel="noreferrer">
+            twelvedata.com
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+    <footer class="bg-white border-t border-line py-12">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <img src="logo.png" alt="Lexiqa" class="h-8 w-auto opacity-70">
+                    <span class="text-xs text-ink/40 uppercase tracking-widest">Аналитические данные</span>
+                </div>
+                <div class="flex gap-8 text-xs text-ink/50 uppercase tracking-widest">
+                    <a href="https://lexiqa.ru" class="hover:text-emerald transition">lexiqa.ru</a>
+                    <a href="mailto:info@lexiqa.ru" class="hover:text-emerald transition">Связаться</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+  <script>
+    lucide.createIcons();
+
+    // Общая разметка Plotly под Lexiqa-стиль
+    const baseLayout = (title, yTitle, unit) => ({
+      title: { text: title, font: { family: "Manrope, sans-serif", size: 14, color: "#121212" } },
+      font: { family: "Manrope, sans-serif", color: "#121212" },
+      paper_bgcolor: "rgba(0,0,0,0)",
+      plot_bgcolor: "rgba(27,77,62,0.03)",
+      margin: { l: 56, r: 18, t: 44, b: 44 },
+      xaxis: {
+        title: { text: "Дата", standoff: 10 },
+        gridcolor: "rgba(224,220,213,0.9)",
+        zerolinecolor: "rgba(224,220,213,0.9)",
+        type: "date"
+      },
+      yaxis: {
+        title: { text: yTitle + (unit ? (" (" + unit + ")") : ""), standoff: 12 },
+        gridcolor: "rgba(224,220,213,0.9)",
+        zerolinecolor: "rgba(224,220,213,0.9)"
+      },
+      shapes: [{
+        type: "line",
+        xref: "x",
+        yref: "paper",
+        x0: "2026-02-03",
+        x1: "2026-02-03",
+        y0: 0,
+        y1: 1,
+        line: { color: "#B08D55", width: 2, dash: "dash" }
+      }],
+      annotations: [{
+        x: "2026-02-03",
+        y: 1.03,
+        xref: "x",
+        yref: "paper",
+        text: "03.02.2026",
+        showarrow: false,
+        font: { size: 11, color: "rgba(18,18,18,0.6)" }
+      }]
+    });
+
+    const cfg = { responsive: true, displayModeBar: false };
+
+    // TRI:TOR (Close) — данные из таблицы FT Markets Data (фрагмент 12.01–09.02, включает нужные даты 15.01–09.02)
+    const triX = [
+      "2026-01-15","2026-01-16","2026-01-19","2026-01-20","2026-01-21","2026-01-22","2026-01-23","2026-01-26","2026-01-27","2026-01-28","2026-01-29","2026-01-30",
+      "2026-02-02","2026-02-03","2026-02-04","2026-02-05","2026-02-06","2026-02-09"
+    ];
+    const triY = [
+      173.48,172.49,169.95,167.31,166.14,168.06,169.10,169.06,161.40,158.91,151.95,150.45,
+      149.00,125.41,127.87,120.95,120.18,121.21
+    ];
+
+    Plotly.newPlot("plot-tri", [{
+      x: triX, y: triY,
+      type: "scatter",
+      mode: "lines+markers",
+      line: { color: "#1B4D3E", width: 2 },
+      marker: { size: 6, color: "#1B4D3E" },
+      hovertemplate: "%{x|%d.%m.%Y}<br>Закрытие: %{y:.2f} CAD<extra></extra>",
+      name: "TRI:TOR"
+    }], baseLayout("Thomson Reuters (TRI:TOR) — цена закрытия", "Цена закрытия", "CAD"), cfg);
+
+    // RELX:NYQ — ряд как в предыдущей версии (подтянуто из исторической таблицы, период 20.01–13.02)
+    const relxX = [
+      "2026-01-20","2026-01-21","2026-01-22","2026-01-23","2026-01-26","2026-01-27","2026-01-28","2026-01-29","2026-01-30",
+      "2026-02-02","2026-02-03","2026-02-04","2026-02-05","2026-02-06","2026-02-09","2026-02-10","2026-02-11","2026-02-12","2026-02-13"
+    ];
+    const relxY = [
+      40.29,40.32,39.84,39.90,39.51,38.36,37.38,36.17,35.80,
+      35.53,30.51,29.78,30.09,29.38,29.48,29.29,27.73,28.81,31.06
+    ];
+
+    Plotly.newPlot("plot-relx", [{
+      x: relxX, y: relxY,
+      type: "scatter",
+      mode: "lines+markers",
+      line: { color: "#B08D55", width: 2 },
+      marker: { size: 6, color: "#B08D55" },
+      hovertemplate: "%{x|%d.%m.%Y}<br>Закрытие: %{y:.2f} USD<extra></extra>",
+      name: "RELX:NYQ"
+    }], baseLayout("RELX (RELX:NYQ) — цена закрытия", "Цена закрытия", "USD"), cfg);
+
+    // WKL:AMS — ряд по Twelve Data (15.01–13.02)
+    const wklX = [
+      "2026-01-15","2026-01-16","2026-01-19","2026-01-20","2026-01-21","2026-01-22","2026-01-23","2026-01-26","2026-01-27","2026-01-28","2026-01-29","2026-01-30",
+      "2026-02-02","2026-02-03","2026-02-04","2026-02-05","2026-02-06","2026-02-09","2026-02-10","2026-02-11","2026-02-12","2026-02-13"
+    ];
+    const wklY = [
+      88.00,87.64,84.88,84.58,84.08,83.30,84.38,83.52,80.56,81.32,79.22,78.88,
+      80.20,70.04,68.56,69.96,67.70,66.82,65.72,62.34,60.48,64.18
+    ];
+
+    Plotly.newPlot("plot-wkl", [{
+      x: wklX, y: wklY,
+      type: "scatter",
+      mode: "lines+markers",
+      line: { color: "#121212", width: 2 },
+      marker: { size: 6, color: "#121212" },
+      hovertemplate: "%{x|%d.%m.%Y}<br>Закрытие: %{y:.2f} EUR<extra></extra>",
+      name: "WKL:AMS"
+    }], baseLayout("Wolters Kluwer (WKL:AMS) — цена закрытия", "Цена закрытия", "EUR"), cfg);
+  </script>
+</body>
+</html>
